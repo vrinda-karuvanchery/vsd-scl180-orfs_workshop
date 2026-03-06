@@ -36,7 +36,8 @@ Week-2 transitions from black-box execution to flow ownership: instead of only k
 4. Prepared SCL180 platform files (LEF/GDS/LIB and liberty filtering).
 5. Started flow run and reached floorplan milestone.
 
-## Screenshot Evidence
+## Task 1.1 — Repository Setup
+
 ### Workspace and setup checks
 Shows the top-level workspace structure with `README.md`, `images`, and `orfs`.
 

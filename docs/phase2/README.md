@@ -42,9 +42,36 @@ ldd /usr/local/bin/openroad | grep -q 'not found'
 2. `ls -ltr` inside `orfs` confirms presence of flow scripts and build helpers (`build_openroad.sh`, `dev_env.sh`, `setup.sh`).
 3. `ldd /usr/local/bin/openroad | grep "not found" || true` shows dependency validation check in use.
 4. `openroad -version` screenshot confirms executable availability in the Codespaces environment.
+5. `yosys -V`, `python3 --version`, and `make --version` screenshots provide direct tool version evidence.
+6. Design-config editor screenshot confirms ORFS `DESIGN_CONFIG` options are available and switchable.
+7. `results/final` listing screenshot confirms artifact classes expected from flow output.
+8. Netlist/library screenshot provides implementation-level evidence of mapped cell instances.
+
+## Version Evidence (From Uploaded Screenshots)
+| Tool | Observed Version |
+|---|---|
+| OpenROAD | `v2.0-28075-g0f99689f45` |
+| Yosys | `0.58+94` |
+| Python | `3.10.12` |
+| GNU Make | `4.3` |
+
+## Output Artifact Evidence (From Uploaded Screenshots)
+`results/final` includes the expected implementation outputs:
+- `lef`
+- `def`
+- `gds`
+- `verilog`
+- `sdf`
+- `spef`
+- `spi`
+- `lib`
+- `mag`
+- `maglef`
+- `sdc`
 
 ## Status
 - Tool inventory: Completed.
 - Source and install path mapping: Completed.
 - Architecture explanation: Completed.
-- Next in Phase 2: add version-pinned tool outputs (`openroad`, `yosys`, `python3`, `make`) from your latest run logs.
+- Version-pinned tool evidence: Added from uploaded screenshots.
+- Next in Phase 2: add direct screenshot files into repo `docs/phase2/` if you want inline image rendering in GitHub.

@@ -50,17 +50,27 @@ ldd /usr/local/bin/openroad | grep -q 'not found'
 ## Screenshot Evidence
 ### Toolchain environment evidence
 ![Repository root listing](../../my_images/repository_layout.png)
+Shows the base repository layout used in the Codespaces environment.
 ![ORFS listing](../../my_images/orfs_repository.png)
+Shows ORFS package contents, including `flow`, docs, scripts, and setup artifacts.
 ![OpenROAD version](../../my_images/version_openroad.png)
+Confirms the OpenROAD executable version installed through the environment setup.
 ![Missing dependency check](../../my_images/dependency_missing.png)
+Shows shared-library dependency verification for OpenROAD using `ldd`.
 ![Yosys version](../../my_images/Yosys_version.png)
+Confirms the Yosys synthesis tool version from terminal evidence.
 ![Python version](../../my_images/python_version.png)
+Confirms Python version used for helper scripts and report generation.
 ![Make version](../../my_images/make-version.png)
+Confirms GNU Make version used to run stage targets in ORFS.
 
 ### Flow artifact and config evidence
 ![Makefile design config view](../../my_images/Make_file_edited.png)
+Shows available `DESIGN_CONFIG` entries and active flow configuration points.
 ![Final results directory](../../my_images/final_directory.png)
+Shows generated final artifacts directories such as `gds`, `def`, `verilog`, and `spef`.
 ![Synthesized netlist snippet](../../my_images/riscv_synthesized_netlist.png)
+Shows technology-mapped netlist cells, validating synthesis output quality.
 
 ## Version Evidence (From Uploaded Screenshots)
 | Tool | Observed Version |

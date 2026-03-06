@@ -1,105 +1,116 @@
-# VSD SCL180 ORFS Workshop - My Documentation
+# VSD SCL180 ORFS Workshop - Week 2 Documentation
 
-> Fork of: [vsdip/vsd-scl180-orfs](https://github.com/vsdip/vsd-scl180-orfs)  
-> My fork: [vrinda-karuvanchery/vsd-scl180-orfs_workshop](https://github.com/vrinda-karuvanchery/vsd-scl180-orfs_workshop)
+Fork: [vrinda-karuvanchery/vsd-scl180-orfs_workshop](https://github.com/vrinda-karuvanchery/vsd-scl180-orfs_workshop)  
+Upstream: [vsdip/vsd-scl180-orfs](https://github.com/vsdip/vsd-scl180-orfs)
 
-## About This Repository
-This repository contains my personal learning notes, experiments, and outputs from the **VSD SCL180 ORFS workshop**.
+## Week 2 Objective
+Build independent RTL-to-GDS execution capability using ORFS/OpenROAD across cloud and local environments.
 
-I am maintaining this as a structured documentation repo with:
-- Step-by-step progress
-- Commands used
-- Screenshots/results
-- Key learnings and troubleshooting notes
+Reference document used:  
+[Week-2 Google Doc](https://docs.google.com/document/d/1ZlxIZmNuuCeij1zmFxtIdxzhbBbAIVUlQXhYC893fqI/edit?tab=t.0)
 
-## What Is Different From Upstream
-Compared to the original upstream repository, this fork includes:
-- My own `README.md`
-- My workshop notes and observations
-- Additional documentation files for each stage/module
-- Any scripts/config updates I make during learning
+## Current Progress
+Status is updated only up to floorplan, as completed so far.
 
-## Repository Structure
-Update this section to match your actual folders.
+| Phase | Scope | Status |
+|---|---|---|
+| Phase 1 | ORFS in GitHub Codespaces | In progress (completed up to floorplan) |
+| Phase 2 | Toolchain mapping from devcontainer | Pending |
+| Phase 3 | Local ORFS + OpenROAD install | Pending |
+| Phase 4 | Local rerun and cloud vs local comparison | Pending |
+| Phase 5 | Unix/debugging evidence | Pending |
 
-```text
-.
-├── README.md
-├── docs/
-│   ├── day1.md
-│   ├── day2.md
-│   ├── day3.md
-│   └── ...
-├── images/
-│   ├── day1/
-│   ├── day2/
-│   └── ...
-├── scripts/
-└── src/
-```
+## Work Done So Far (Up To Floorplan)
 
-## Workshop Progress Log
-| Day/Module | Status | Notes Link |
-|------------|--------|------------|
-| Day 1      | ✅ Completed | [docs/day1.md](docs/day1.md) |
-| Day 2      | ⏳ In Progress | [docs/day2.md](docs/day2.md) |
-| Day 3      | ⬜ Planned | [docs/day3.md](docs/day3.md) |
+### Phase 1.1 - Repository and Codespaces Setup
+Completed steps:
+1. Forked the upstream repository.
+2. Launched GitHub Codespaces.
+3. Completed initial environment setup.
 
-## Setup
-Document your exact environment here.
-
-### Prerequisites
-- OS: `<your OS>`
-- Tools: `<tool1>`, `<tool2>`, `<tool3>`
-- PDK/Tech files: `<if applicable>`
-
-### Clone
+Environment verification commands used:
 ```bash
-git clone https://github.com/vrinda-karuvanchery/vsd-scl180-orfs_workshop.git
-cd vsd-scl180-orfs_workshop
+openroad -version
+yosys -V
+python3 --version
+make --version
 ```
 
-## How To Use This Repo
-Describe how someone can reproduce your flow.
-
-1. Read module notes in `docs/`
-2. Run commands from each module section
-3. Compare outputs with screenshots in `images/`
-
-## Key Commands
-Keep frequently used commands here.
+### Phase 1.2 - SCL180 Platform Preparation
+The following PDK integration steps are completed in the flow platform directory:
 
 ```bash
-# example placeholders
-<command-1>
-<command-2>
-<command-3>
+cp scl180/stdcell/fs120/6M1L/lef/scl18fs120_tech.lef \
+   orfs/flow/platforms/scl180fs120/lef/
+
+cp scl180/stdcell/fs120/6M1L/lef/scl18fs120_std.lef \
+   orfs/flow/platforms/scl180fs120/lef/scl18fs120_merged.lef
+
+cp scl180/stdcell/fs120/6M1L/gds/scl18fs120.gds \
+   orfs/flow/platforms/scl180fs120/gds/
+
+cp scl180/stdcell/fs120/6M1L/liberty/lib_flow_ss/tsl18fs120_scl_ss.lib \
+   orfs/flow/platforms/scl180fs120/lib/
 ```
 
-## Results / Outputs
-Add major outputs here with links/images.
+Liberty cleanup step used:
+```bash
+export SCL_LIB=orfs/flow/platforms/scl180fs120/lib/tsl18fs120_scl_ss.lib
 
-- Day 1 output: `<link or short note>`
-- Day 2 output: `<link or short note>`
+awk '
+BEGIN{skip=0}
+/^[ \t]*cell\(/ {
+  skip=0
+  if ($0 ~ /cell\(srlab(1|2|4)\)/) skip=1
+}
+{ if (!skip) print }
+' "$SCL_LIB" \
+> orfs/flow/platforms/scl180fs120/lib/tsl18fs120_scl_ss.nosrlab.lib
+```
 
-## Issues Faced and Fixes
-| Issue | Cause | Fix |
-|------|-------|-----|
-| `<issue>` | `<cause>` | `<fix>` |
+### Flow Execution (Until Floorplan)
+Commands used:
+```bash
+cd orfs/flow
+make clean_all
+make
+```
 
-## Learning Notes
-- `<concept 1>`
-- `<concept 2>`
-- `<concept 3>`
+Current milestone reached: `floorplan` stage.
 
-## Future Work
-- Complete pending modules
-- Improve reproducibility of steps
-- Add automation scripts where possible
+## Evidence Collected So Far
+
+### Setup and PDK integration
+- ![Extract SCL PDK](images/1_StepsToExtractSCLPDK.png)
+- ![Copy technology LEF](images/2_copyTechLef.png)
+- ![Copy standard-cell LEF](images/3_copyStdCellLef.png)
+- ![Verify LEFs in platform](images/4_VerifySCLLefPresentInORFSPlatform.png)
+- ![Copy GDS](images/5_CopySCLGDSAndVerifyOnORFSPlatform.png)
+- ![Copy liberty](images/6_VeryImpCopySCL_SS_LIBAndVerifyOnORFSPlatform.png)
+- ![Edit liberty](images/7_VeryImportant_EditLibAndVerifyOnORFSPlatform.png)
+- ![Start flow run](images/8_startFlow_make_clean_all_and_make.png)
+
+### Pending evidence to add after next run
+- Synthesis completion snippet
+- Floorplan log snippet (current stage proof)
+- Placement completion proof
+- CTS/routing/GDS/timing evidence
+
+## Useful Log Commands For Next Update
+```bash
+cd orfs/flow
+find logs -type f | grep -i floorplan
+
+# Example once log is present:
+# less logs/<platform>/<design>/<variant>/2_1_floorplan.log
+```
+
+## Next Steps
+1. Capture and add explicit floorplan log snippet in this README.
+2. Continue run to placement, CTS, routing, and final GDS.
+3. Fill Phase 2 toolchain mapping table from `.devcontainer/Dockerfile` and `.devcontainer/install-openroad.sh`.
+4. Add cloud runtime and WNS/TNS summary after full run.
 
 ## Attribution
-This repository is based on the upstream project:  
-[vsdip/vsd-scl180-orfs](https://github.com/vsdip/vsd-scl180-orfs)
-
-I retain credit to the original authors for base workshop content/framework.  
-My additions are personal documentation, notes, and workflow updates.
+This repository is based on [vsdip/vsd-scl180-orfs](https://github.com/vsdip/vsd-scl180-orfs).  
+Original framework and collateral are from the upstream project; this fork documents my own execution and learning notes.

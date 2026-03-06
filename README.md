@@ -1,299 +1,105 @@
-# OpenROAD RTL-to-GDS Flow for **SCL180 (FS120)**
+# VSD SCL180 ORFS Workshop - My Documentation
 
-This repository provides a **fully functional OpenROAD RTL-to-GDS flow** for the **SCL180 FS120** technology node.
+> Fork of: [vsdip/vsd-scl180-orfs](https://github.com/vsdip/vsd-scl180-orfs)  
+> My fork: [vrinda-karuvanchery/vsd-scl180-orfs_workshop](https://github.com/vrinda-karuvanchery/vsd-scl180-orfs_workshop)
 
-The flow has been **validated end-to-end** on:
+## About This Repository
+This repository contains my personal learning notes, experiments, and outputs from the **VSD SCL180 ORFS workshop**.
 
-* ✅ **GitHub Codespaces**
-* ✅ **Local Ubuntu 22.04 (x86-64)**
+I am maintaining this as a structured documentation repo with:
+- Step-by-step progress
+- Commands used
+- Screenshots/results
+- Key learnings and troubleshooting notes
 
-The repository includes:
+## What Is Different From Upstream
+Compared to the original upstream repository, this fork includes:
+- My own `README.md`
+- My workshop notes and observations
+- Additional documentation files for each stage/module
+- Any scripts/config updates I make during learning
 
-* A **prebuilt OpenROAD binary** (Ubuntu 22.04, x86)
-* A complete **OpenROAD-Flow-Scripts (ORFS)** setup
-* Platform integration for **SCL180FS120**
+## Repository Structure
+Update this section to match your actual folders.
 
-> ⚠️ **Important Note on Licensing**
-> Foundry PDK files (**LEF, GDS, LIB, CDL**) are **NOT included** in this repository.
-> Users must supply the **SCL180 PDK** from their **licensed source**.
-
----
-
-## Repository Layout
-
+```text
+.
+├── README.md
+├── docs/
+│   ├── day1.md
+│   ├── day2.md
+│   ├── day3.md
+│   └── ...
+├── images/
+│   ├── day1/
+│   ├── day2/
+│   └── ...
+├── scripts/
+└── src/
 ```
-vsd-scl180-orfs/
-├── images/                  # Screenshots used in this README
-├── orfs/
-│   ├── flow/                # Run the OpenROAD flow from here
-│   └── tools/openroad/      # Prebuilt OpenROAD binary
-├── .devcontainer/           # GitHub Codespaces configuration
-├── README.md                # This file (shown on repo main page)
+
+## Workshop Progress Log
+| Day/Module | Status | Notes Link |
+|------------|--------|------------|
+| Day 1      | ✅ Completed | [docs/day1.md](docs/day1.md) |
+| Day 2      | ⏳ In Progress | [docs/day2.md](docs/day2.md) |
+| Day 3      | ⬜ Planned | [docs/day3.md](docs/day3.md) |
+
+## Setup
+Document your exact environment here.
+
+### Prerequisites
+- OS: `<your OS>`
+- Tools: `<tool1>`, `<tool2>`, `<tool3>`
+- PDK/Tech files: `<if applicable>`
+
+### Clone
+```bash
+git clone https://github.com/vrinda-karuvanchery/vsd-scl180-orfs_workshop.git
+cd vsd-scl180-orfs_workshop
 ```
 
----
+## How To Use This Repo
+Describe how someone can reproduce your flow.
 
-# 1️⃣ Running the Flow on **GitHub Codespaces** (Recommended)
+1. Read module notes in `docs/`
+2. Run commands from each module section
+3. Compare outputs with screenshots in `images/`
 
-This is the **fastest and zero-install** way to run the flow.
-
----
-
-## Step 1: Launch GitHub Codespaces
-
-1. Open the repository
-   👉 [https://github.com/vsdip/vsd-scl180-orfs](https://github.com/vsdip/vsd-scl180-orfs)
-2. Click **Code → Codespaces → Create codespace**
-3. Wait for the container to build
-   *(OpenROAD, GUI, and noVNC are preinstalled)*
-
----
-
-## Step 2: Obtain the SCL180 PDK
-
-You may download the PDK using **any method**:
-
-* `wget` from your private cloud
-* Firefox inside Codespaces
-* OneDrive / Google Drive / S3 / DigitalOcean
-
-Example:
+## Key Commands
+Keep frequently used commands here.
 
 ```bash
-wget <your-private-link>/SCLPDK_V3.0_KIT.tar
+# example placeholders
+<command-1>
+<command-2>
+<command-3>
 ```
 
----
-
-## Step 3: Extract the PDK
-
-![Steps to extract SCL PDK](images/1_StepsToExtractSCLPDK.png)
-
-```bash
-tar -xf SCLPDK_V3.0_KIT.tar
-cd SCLPDK_V3.0_KIT
-tar -xzf scl180.tar.gz
-```
-
-This creates:
-
-```
-scl180/
-├── stdcell/
-├── pdk/
-├── digital_pnr_kit/
-└── ...
-```
-
----
-
-## Step 4: Copy **Technology LEF**
-
-![Copy technology LEF](images/2_copyTechLef.png)
-
-```bash
-cp scl180/stdcell/fs120/6M1L/lef/scl18fs120_tech.lef \
-   orfs/flow/platforms/scl180fs120/lef/
-```
-
----
-
-## Step 5: Copy **Standard-Cell LEF**
-
-![Copy standard cell LEF](images/3_copyStdCellLef.png)
-
-```bash
-cp scl180/stdcell/fs120/6M1L/lef/scl18fs120_std.lef \
-   orfs/flow/platforms/scl180fs120/lef/scl18fs120_merged.lef
-```
-
----
-
-## Step 6: Verify LEFs in ORFS Platform
-
-![Verify LEFs present](images/4_VerifySCLLefPresentInORFSPlatform.png)
-
-```bash
-ls orfs/flow/platforms/scl180fs120/lef/
-```
-
-Expected:
-
-```
-scl18fs120_tech.lef
-scl18fs120_merged.lef
-```
-
----
-
-## Step 7: Copy **Standard-Cell GDS**
-
-![Copy GDS and verify](images/5_CopySCLGDSAndVerifyOnORFSPlatform.png)
-
-```bash
-cp scl180/stdcell/fs120/6M1L/gds/scl18fs120.gds \
-   orfs/flow/platforms/scl180fs120/gds/
-```
-
----
-
-## Step 8: Copy **Liberty (.lib)**
-
-![Copy SS liberty](images/6_VeryImpCopySCL_SS_LIBAndVerifyOnORFSPlatform.png)
-
-```bash
-cp scl180/stdcell/fs120/6M1L/liberty/lib_flow_ss/tsl18fs120_scl_ss.lib \
-   orfs/flow/platforms/scl180fs120/lib/
-```
-
----
-
-## Step 9: Filter `srlab` Cells (VERY IMPORTANT)
-
-![Edit liberty and verify](images/7_VeryImportant_EditLibAndVerifyOnORFSPlatform.png)
-
-```bash
-export SCL_LIB=orfs/flow/platforms/scl180fs120/lib/tsl18fs120_scl_ss.lib
-
-awk '
-BEGIN{skip=0}
-/^[ \t]*cell\(/ {
-  skip=0
-  if ($0 ~ /cell\(srlab(1|2|4)\)/) skip=1
-}
-{ if (!skip) print }
-' "$SCL_LIB" \
-> orfs/flow/platforms/scl180fs120/lib/tsl18fs120_scl_ss.nosrlab.lib
-```
-
----
-
-## Step 10: Run the Flow
-
-![Run clean and make](images/8_startFlow_make_clean_all_and_make.png)
-
-```bash
-cd orfs/flow
-make clean_all
-make
-```
-
----
-
-## Step 11: Verify Completion & View Layout
-
-![Proof of run completion](images/9_ProofOfRunCompletionAndCommandToObserveLayout.png)
-
-```bash
-make klayout_6_final.gds
-```
-
----
-
-## Step 12: Access GUI via noVNC
-
-![Open port 6080](images/10_OpenPortsOnGitHubCodeSpaceToAccessVNC.png)
-
-* Open **Ports** tab in Codespaces
-* Click **Port 6080**
-* XFCE desktop opens in browser
-* KLayout launches graphically
-
----
-
-### Opening the noVNC Desktop (GUI Access)
-
-![Open noVNC Lite](images/11_Open_VNC_Lite.png)
-
-Once Port **6080** is opened in GitHub Codespaces, the noVNC web interface becomes accessible.  
-This page confirms that the browser-based VNC server is running.
-
-**Recommended action:**
-- Click **`vnc_lite.html`** for a faster and lightweight desktop session.
-
-This opens an XFCE desktop directly inside your browser, with access to graphical EDA tools such as **KLayout**, **GTKWave**, and **Magic**.
-
----
-
-### Viewing the Final Layout in KLayout
-
-![Observe final GDS in KLayout](images/12_ObserveLayout.png)
-
-
----
-
-# 2️⃣ Running the Flow on a **Local Ubuntu Machine**
-
-### Supported Environment
-
-* **Ubuntu 22.04**
-* **x86-64**
-* No OpenROAD installation required
-
----
-
-## Step 1: Clone the Repository
-
-```bash
-git clone https://github.com/vsdip/vsd-scl180-orfs.git
-cd vsd-scl180-orfs
-```
-
----
-
-## Step 2: Use the Bundled OpenROAD Binary
-
-Prebuilt OpenROAD location:
-
-```
-orfs/tools/openroad/bin/openroad
-```
-
-Add it to your PATH:
-
-```bash
-export PATH=$PWD/orfs/tools/openroad/bin:$PATH
-openroad -version
-```
-
----
-
-## Step 3: Provide the SCL180 PDK
-
-Repeat **Steps 2–9 from the Codespaces section** to populate:
-
-```
-orfs/flow/platforms/scl180fs120/
-├── lef/
-├── gds/
-├── lib/
-```
-
----
-
-## Step 4: Run the Flow
-
-```bash
-cd orfs/flow
-make clean_all
-make
-```
-
----
-
-## Step 5: View Final Layout (Optional)
-
-```bash
-make klayout_6_final.gds
-```
-
----
-
-## Summary
-
-* ✅ Fully open-source **RTL-to-GDS** flow
-* ✅ Works on **GitHub Codespaces** and **local Ubuntu**
-* ✅ No OpenROAD installation required
-* ✅ Clean separation of **licensed PDK content**
-* ✅ Suitable for **education, research, and prototyping**
-
+## Results / Outputs
+Add major outputs here with links/images.
+
+- Day 1 output: `<link or short note>`
+- Day 2 output: `<link or short note>`
+
+## Issues Faced and Fixes
+| Issue | Cause | Fix |
+|------|-------|-----|
+| `<issue>` | `<cause>` | `<fix>` |
+
+## Learning Notes
+- `<concept 1>`
+- `<concept 2>`
+- `<concept 3>`
+
+## Future Work
+- Complete pending modules
+- Improve reproducibility of steps
+- Add automation scripts where possible
+
+## Attribution
+This repository is based on the upstream project:  
+[vsdip/vsd-scl180-orfs](https://github.com/vsdip/vsd-scl180-orfs)
+
+I retain credit to the original authors for base workshop content/framework.  
+My additions are personal documentation, notes, and workflow updates.

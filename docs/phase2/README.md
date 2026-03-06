@@ -47,6 +47,21 @@ ldd /usr/local/bin/openroad | grep -q 'not found'
 7. `results/final` listing screenshot confirms artifact classes expected from flow output.
 8. Netlist/library screenshot provides implementation-level evidence of mapped cell instances.
 
+## Screenshot Evidence
+### Toolchain environment evidence
+![Repository root listing](../../my_images/repository_layout.png)
+![ORFS listing](../../my_images/orfs_repository.png)
+![OpenROAD version](../../my_images/version_openroad.png)
+![Missing dependency check](../../my_images/dependency_missing.png)
+![Yosys version](../../my_images/Yosys_version.png)
+![Python version](../../my_images/python_version.png)
+![Make version](../../my_images/make-version.png)
+
+### Flow artifact and config evidence
+![Makefile design config view](../../my_images/Make_file_edited.png)
+![Final results directory](../../my_images/final_directory.png)
+![Synthesized netlist snippet](../../my_images/riscv_synthesized_netlist.png)
+
 ## Version Evidence (From Uploaded Screenshots)
 | Tool | Observed Version |
 |---|---|

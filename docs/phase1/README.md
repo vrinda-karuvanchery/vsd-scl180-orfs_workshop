@@ -55,6 +55,23 @@ Using only the screenshots you uploaded in this chat:
 11. Chip area screenshot for top module `riscv`.
 12. Netlist/library snippet screenshot from generated design files.
 
+## Screenshot Evidence
+### Workspace and setup checks
+![Repository layout](../../my_images/repository_layout.png)
+![ORFS repository listing](../../my_images/orfs_repository.png)
+![OpenROAD version](../../my_images/version_openroad.png)
+![Yosys version](../../my_images/Yosys_version.png)
+![Python version](../../my_images/python_version.png)
+![Make version](../../my_images/make-version.png)
+
+### Synthesis and floorplan stage evidence
+![Synthesis log](../../my_images/synthesis_log.png)
+![Floorplan timing report](../../my_images/timing_floorplan.png)
+![Floorplan power report](../../my_images/power_floorplan.png)
+![Floorplan design area and checks](../../my_images/floorpla_log_design_area.png)
+![Chip area summary](../../my_images/chip_area_total_module_riscv.png)
+![Synthesized netlist snippet](../../my_images/riscv_synthesized_netlist.png)
+
 ## Extracted Values From Uploaded Screenshots
 ### Environment checks
 - `openroad -version`: `v2.0-28075-g0f99689f45`

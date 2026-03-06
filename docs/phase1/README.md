@@ -3,6 +3,32 @@
 ## Scope
 Run ORFS in GitHub Codespaces and execute flow progress through floorplan.
 
+## Concept Note: Single Wrapper Flow vs ORFS
+A wrapper flow is a controller layer that hides multiple EDA tool steps behind one command and manages all intermediate handoffs automatically.
+
+### OpenLane (single wrapper)
+- Typical usage: one command such as `flow.tcl -design <design_name>`.
+- Internally runs synthesis, floorplan, placement, CTS, routing, timing, signoff, and final GDS.
+- Good for learning overall flow outcome quickly, but internal stage-level control is limited.
+
+### ORFS (modular flow)
+- Exposes stage scripts and stage-wise execution through `make` targets.
+- Typical progression is visible as synthesis -> floorplan -> placement -> CTS -> routing -> signoff.
+- Better for debugging, parameter tuning, and understanding exactly which stage fails or regresses.
+
+### Why this matters in Week-2
+Week-2 transitions from black-box execution to flow ownership: instead of only knowing start/end, we inspect and control each physical design stage.
+
+## Stage/Tool Mapping (Practical View)
+| Stage | Main Tool |
+|---|---|
+| Synthesis | Yosys |
+| Floorplan | OpenROAD |
+| Placement | OpenROAD |
+| CTS | TritonCTS (inside OpenROAD) |
+| Routing | TritonRoute/FastRoute (inside OpenROAD flow) |
+| Timing | OpenSTA (inside OpenROAD flow) |
+
 ## Completed Work
 1. Forked upstream repository and launched Codespaces.
 2. Verified workspace structure in root (`README.md`, `images`, `orfs`).
@@ -69,6 +95,37 @@ Shows a mapped netlist excerpt using sky130 standard cells after synthesis.
 - Tool invocation checks: Completed.
 - Flow execution: Completed up to floorplan with timing/power/area evidence captured from screenshots.
 - Remaining in phase: collect explicit floorplan log snippet and continue to placement/CTS/routing/final reports.
+
+## Troubleshooting Note: `openroad` Not Found
+Codespace name is not the root cause; missing OpenROAD is usually an install/path issue.
+
+1. Confirm you are in container/workspace:
+```bash
+cat /etc/os-release
+pwd
+```
+
+2. Check whether `.devcontainer/Dockerfile` actually installs OpenROAD:
+```bash
+grep -nEi "openroad|install-openroad" .devcontainer/Dockerfile
+```
+
+3. Check whether binary exists on disk:
+```bash
+find / -type f -name openroad 2>/dev/null | head -n 10
+```
+
+4. If found outside PATH, export PATH to the actual binary directory.
+
+5. Validate dependencies:
+```bash
+ldd /usr/local/bin/openroad | grep "not found" || true
+```
+
+6. If binary is missing, run install script from repo root:
+```bash
+bash .devcontainer/install-openroad.sh
+```
 
 ## Pending Additions
 ```bash

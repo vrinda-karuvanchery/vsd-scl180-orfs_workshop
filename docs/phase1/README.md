@@ -40,25 +40,8 @@ make clean_all
 make
 ```
 
-## Evidence Images
-### Environment and setup
-![Extract SCL PDK](../../images/1_StepsToExtractSCLPDK.png)
-![Copy technology LEF](../../images/2_copyTechLef.png)
-![Copy standard-cell LEF](../../images/3_copyStdCellLef.png)
-![Verify LEFs in platform](../../images/4_VerifySCLLefPresentInORFSPlatform.png)
-![Copy GDS](../../images/5_CopySCLGDSAndVerifyOnORFSPlatform.png)
-![Copy SS liberty](../../images/6_VeryImpCopySCL_SS_LIBAndVerifyOnORFSPlatform.png)
-![Filter liberty cells](../../images/7_VeryImportant_EditLibAndVerifyOnORFSPlatform.png)
-
-### Flow run and GUI
-![Start flow make clean and make](../../images/8_startFlow_make_clean_all_and_make.png)
-![Run completion and layout command](../../images/9_ProofOfRunCompletionAndCommandToObserveLayout.png)
-![Open ports for noVNC](../../images/10_OpenPortsOnGitHubCodeSpaceToAccessVNC.png)
-![Open VNC lite](../../images/11_Open_VNC_Lite.png)
-![Observe layout](../../images/12_ObserveLayout.png)
-
-## Additional Screenshot Evidence (Provided in Discussion)
-These screenshots were shared and used as relevant evidence:
+## Evidence (Only Uploaded Here)
+Using only the screenshots you uploaded in this chat:
 1. `openroad -version` output visible in Codespaces terminal.
 2. Root `ls -ltr` output showing repository directories and files.
 3. ORFS directory `ls -ltr` output showing build and setup scripts.

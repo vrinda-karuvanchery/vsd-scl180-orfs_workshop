@@ -10,51 +10,6 @@ Run ORFS in GitHub Codespaces and execute flow progress through floorplan.
 4. Prepared SCL180 platform files (LEF/GDS/LIB and liberty filtering).
 5. Started flow run and reached floorplan milestone.
 
-## Commands Used
-```bash
-openroad -version
-ls -ltr
-
-cp scl180/stdcell/fs120/6M1L/lef/scl18fs120_tech.lef \
-  orfs/flow/platforms/scl180fs120/lef/
-cp scl180/stdcell/fs120/6M1L/lef/scl18fs120_std.lef \
-  orfs/flow/platforms/scl180fs120/lef/scl18fs120_merged.lef
-cp scl180/stdcell/fs120/6M1L/gds/scl18fs120.gds \
-  orfs/flow/platforms/scl180fs120/gds/
-cp scl180/stdcell/fs120/6M1L/liberty/lib_flow_ss/tsl18fs120_scl_ss.lib \
-  orfs/flow/platforms/scl180fs120/lib/
-
-export SCL_LIB=orfs/flow/platforms/scl180fs120/lib/tsl18fs120_scl_ss.lib
-awk '
-BEGIN{skip=0}
-/^[ \t]*cell\(/ {
-  skip=0
-  if ($0 ~ /cell\(srlab(1|2|4)\)/) skip=1
-}
-{ if (!skip) print }
-' "$SCL_LIB" \
-> orfs/flow/platforms/scl180fs120/lib/tsl18fs120_scl_ss.nosrlab.lib
-
-cd orfs/flow
-make clean_all
-make
-```
-
-## Evidence (Only Uploaded Here)
-Using only the screenshots you uploaded in this chat:
-1. `openroad -version` output visible in Codespaces terminal.
-2. Root `ls -ltr` output showing repository directories and files.
-3. ORFS directory `ls -ltr` output showing build and setup scripts.
-4. `results/final` directory listing showing generated outputs (`lef`, `def`, `gds`, `verilog`, `spef`, `sdf`, `lib`).
-5. Design config view showing active design config lines in flow files.
-6. `cat 1_synth.log` output showing synthesis completion and elapsed time.
-7. Floorplan metrics screenshots showing `tns`, `wns`, worst slack, clock period/fmax.
-8. Floorplan power report screenshot.
-9. Floorplan check/setup + design area summary screenshot.
-10. `yosys -V`, `python3 --version`, `make --version` outputs.
-11. Chip area screenshot for top module `riscv`.
-12. Netlist/library snippet screenshot from generated design files.
-
 ## Screenshot Evidence
 ### Workspace and setup checks
 ![Repository layout](../../my_images/repository_layout.png)

@@ -38,29 +38,29 @@ Week-2 transitions from black-box execution to flow ownership: instead of only k
 
 ## Screenshot Evidence
 ### Workspace and setup checks
-![Repository layout](../../my_images/repository_layout.png)
-
 Shows the top-level workspace structure with `README.md`, `images`, and `orfs`.
 
 ![ORFS repository listing](../../my_images/orfs_repository.png)
 
 Shows ORFS directory contents, including flow scripts and setup/build files.
 
-![OpenROAD version](../../my_images/version_openroad.png)
+![Repository layout](../../my_images/repository_layout.png)
 
 Confirms OpenROAD is installed and runnable in the Codespaces environment.
 
-![Yosys version](../../my_images/Yosys_version.png)
+![OpenROAD version](../../my_images/version_openroad.png)
 
 Confirms Yosys is available for synthesis in the same environment.
 
-![Python version](../../my_images/python_version.png)
+![Yosys version](../../my_images/Yosys_version.png)
 
 Confirms Python runtime version used by ORFS utility scripts.
 
-![Make version](../../my_images/make-version.png)
+![Python version](../../my_images/python_version.png)
 
 Confirms GNU Make version used to orchestrate flow stages.
+
+![Make version](../../my_images/make-version.png)
 
 ### Synthesis and floorplan stage evidence
 ![Synthesis log](../../my_images/synthesis_log.png)

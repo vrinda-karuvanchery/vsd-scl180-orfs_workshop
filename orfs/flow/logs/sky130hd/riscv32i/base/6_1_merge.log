@@ -1,0 +1,6 @@
+KLayout 0.29.0
+[INFO] Reporting cells prior to loading DEF ...
+	/workspaces/vsd-scl180-orfs_workshop/orfs/flow/platforms/sky130hd/gds/sky130_fd_sc_hd.gds
+[INFO] All LEF cells have matching GDS/OAS cells
+[INFO] No orphan cells in the final layout
+Elapsed time: 0:04.99[h:]min:sec. CPU time: user 2.65 sys 0.41 (61%). Peak memory: 477768KB.

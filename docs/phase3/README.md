@@ -1,4 +1,4 @@
-# Phase 3 — Full RTL-to-GDS Flow Implementation Report
+# Full RTL-to-GDS Flow Implementation Report
 
 **Design:** RISC-V (`riscv`)
 **Platform:** sky130hd
